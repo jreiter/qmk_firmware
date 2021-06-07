@@ -28,19 +28,26 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_0_RBRC] = ACTION_TAP_DANCE_DOUBLE(KC_0, KC_RBRC)
 };
 
+#define KC_LSZ LSFT_T(KC_Z)
+#define KC_RSSL LSFT_T(KC_SLSH)
+#define KC_LCTF LCTL_T(KC_F)
+#define KC_RCTJ RCTL_T(KC_J)
+#define KC_LGD LGUI_T(KC_D)
+#define KC_RGK RGUI_T(KC_K)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [0] = LAYOUT_stagger(
-        KC_GESC,  KC_Q,     KC_W,     KC_E,   KC_R,           KC_T,    KC_Y,   KC_U,     KC_I,     KC_O,    KC_P,            KC_DEL,  KC_BSPC,  KC_MUTE,
-        KC_TAB,   KC_A,     KC_S,     KC_D,   KC_F,           KC_G,    KC_H,   KC_J,     KC_K,     KC_L,    KC_SCLN,         KC_ENT,
-        KC_LSFT,  KC_Z,     KC_X,     KC_C,   KC_V,           KC_B,    KC_N,   KC_M,     KC_COMM,  KC_DOT,  LT(3, KC_SLSH),  KC_UP,
-        KC_LCTL,  KC_LALT,  KC_LGUI,  MO(1),  LT(2, KC_SPC),  KC_RGUI, MO(4),  KC_LEFT,  KC_DOWN,  KC_RGHT
+        KC_GESC,  KC_Q,     KC_W,     KC_E,   KC_R,           KC_T,   KC_Y,   KC_U,     KC_I,     KC_O,    KC_P,     KC_DEL,  KC_BSPC,  KC_MUTE,
+        KC_TAB,   KC_A,     KC_S,     KC_LGD, KC_LCTF,        KC_G,   KC_H,   KC_RCTJ,  KC_RGK,   KC_L,    KC_SCLN,  KC_ENT,
+        KC_LSFT,  KC_LSZ,   KC_X,     KC_C,   KC_V,           KC_B,   KC_N,   KC_M,     KC_COMM,  KC_DOT,  KC_RSSL,  KC_UP,
+        KC_LCTL,  KC_LALT,  KC_LGUI,  MO(1),  LT(2, KC_SPC),  MO(4),  MO(3),  KC_LEFT,  KC_DOWN,  KC_RGHT
     ),
 
     [1] = LAYOUT_stagger(
         KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     TD(TD_9_LBRC),  TD(TD_0_RBRC),   KC_MINS, KC_EQL, KC_TRNS,
-        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_QUOT,        KC_SCLN,         KC_BSLS,
-        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,        KC_TRNS,         KC_TRNS,
+        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_QUOT,        KC_QUOT,         KC_TRNS,
+        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,        KC_BSLS,         KC_TRNS,
         KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
     ),
 
@@ -106,4 +113,20 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             tap_code(KC_VOLU);
         }
     }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case KC_LSZ:
+      return TAPPING_SHIFT_TERM;
+    case KC_RSSL:
+      return TAPPING_SHIFT_TERM;
+    case KC_LGD:
+    case KC_LCTF:
+    case KC_RCTJ:
+    case KC_RGK:
+      return TAPPING_HM_TERM;
+    default:
+      return TAPPING_TERM;
+  }
 }
