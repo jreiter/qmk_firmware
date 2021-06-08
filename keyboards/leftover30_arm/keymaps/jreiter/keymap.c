@@ -26,6 +26,25 @@ enum custom_keycodes {
     RAISE
 };
 
+#define KC_MQL TD(TD_MINS_EQL)
+#define KC_9LB TD(TD_9_LBRC)
+#define KC_0RB TD(TD_0_RBRC)
+
+// #define KC_ESAD  LT(_ADJUST, KC_ESC)
+// #define KC_BSLO  LT(_LOWER, KC_BSPC)
+#define KC_LOWR  MO(_LOWER)
+#define KC_SPRA  LT(_RAISE, KC_SPC)
+#define KC_AJST  MO(_ADJUST)
+
+#define KC_LSZ LSFT_T(KC_Z)
+#define KC_RSSL LSFT_T(KC_SLSH)
+#define KC_LCTF LCTL_T(KC_F)
+#define KC_RCTJ RCTL_T(KC_J)
+#define KC_LGD LGUI_T(KC_D)
+#define KC_RGK RGUI_T(KC_K)
+#define KC_LAS LALT_T(KC_S)
+
+
 enum {
   TD_MINS_EQL = 0,
   TD_9_LBRC,
@@ -57,31 +76,16 @@ combo_t key_combos[COMBO_COUNT] = {
   [ONETWO_GRV] = COMBO(grv_combo, KC_GRV)
 };
 
-#define KC_MQL TD(TD_MINS_EQL)
-#define KC_9LB TD(TD_9_LBRC)
-#define KC_0RB TD(TD_0_RBRC)
-
-// #define KC_ESAD  LT(_ADJUST, KC_ESC)
-// #define KC_BSLO  LT(_LOWER, KC_BSPC)
-#define KC_LOWR  MO(_LOWER)
-#define KC_SPRA  LT(_RAISE, KC_SPC)
-#define KC_AJST  MO(_ADJUST)
-
-#define KC_LSZ LSFT_T(KC_Z)
-#define KC_RSSL LSFT_T(KC_SLSH)
-#define KC_LCTF LCTL_T(KC_F)
-#define KC_RCTJ RCTL_T(KC_J)
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_all(
   //,-----------------------------------------------------------------------------------------------------------.
                KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------|
-               KC_A,    KC_S,    KC_D,   KC_LCTF,  KC_G,    KC_H,    KC_RCTJ, KC_K,    KC_L,       KC_SCLN,
+               KC_A,    KC_LAS,  KC_LGD,  KC_LCTF, KC_G,    KC_H,    KC_RCTJ, KC_RGK,  KC_L,       KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------|
                KC_LSZ,  KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,     KC_RSSL,
   //|--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------|
-      KC_MUTE, KC_LGUI,                                KC_SPRA,                                KC_LOWR,  KC_AJST
+      KC_MUTE, KC_LGUI,                                KC_SPRA,                                KC_AJST,  KC_LOWR
   //`-----------------------------------------------------------------------------------------------------------'
   ),
 
@@ -127,9 +131,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case KC_SPRA:
       return TAPPING_LAYER_TERM;
     case KC_LSZ:
-      return TAPPING_SHIFT_TERM;
     case KC_RSSL:
       return TAPPING_SHIFT_TERM;
+    case KC_LAS:
+    case KC_LGD:
+    case KC_LCTF:
+    case KC_RCTJ:
+    case KC_RGK:
+      return TAPPING_HM_TERM;
     default:
       return TAPPING_TERM;
   }
